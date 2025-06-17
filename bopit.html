@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIP</title>
+    <link rel="icon" type="image/ico" href="https://i.imgur.com/oGPEtCC.png">
+    <style>
+        body {
+            zoom: 100%;
+            background-color: #000000;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            image-rendering: pixelated;
+            transform: scale(1);
+            -webkit-user-drag: none;
+            user-select: none;
+            pointer-events: auto;
+        }
+
+        .scaled {
+            transform: scale(1.1);
+        }
+
+        .shake1 {
+            animation: shake1 0.1s infinite;
+        }
+
+        .shake2 {
+            animation: shake2 0.08s infinite;
+        }
+
+        .shake3 {
+            animation: shake3 0.06s infinite;
+        }
+
+        .shake4 {
+            animation: shake4 0.04s infinite;
+        }
+        
+        .shake5 {
+            animation: shake5 0.03s infinite;
+        }
+
+
+        @keyframes shake1 {
+            0% { transform: translate(0px, 0px); }
+            50% { transform: translate(1px, -1px); }
+            100% { transform: translate(-1px, 1px); }
+        }
+
+        @keyframes shake2 {
+            0% { transform: translate(0px, 0px); }
+            50% { transform: translate(2px, -2px); }
+            100% { transform: translate(-2px, 2px); }
+        }
+
+        @keyframes shake3 {
+            0% { transform: translate(0px, 0px); }
+            50% { transform: translate(3px, -3px); }
+            100% { transform: translate(-3px, 3px); }
+        }
+
+        @keyframes shake4 {
+            0% { transform: translate(0px, 0px); }
+            50% { transform: translate(4px, -4px); }
+            100% { transform: translate(-4px, 4px); }
+        }
+
+        @keyframes shake5 {
+            0% { transform: translate(0px, 0px); }
+            50% { transform: translate(5px, -5px); }
+            100% { transform: translate(-5px, 5px); }
+        }
+    </style>
+</head>
+
+<body>
+    <img style="cursor: pointer; width: auto; height: 300px" id="clickableImage" src="img\chukl.png" alt="the guy" draggable="false">
+
+    <audio id="bgm" autoplay loop>
+        <source src="audio\Galaxy_loop.ogg" type="audio/mpeg">
+    </audio>
+
+    <audio id="shakeSound" loop>
+        <source src="audio\37247_127345-lq.ogg" type="audio/mpeg">
+    </audio>
+
+    <audio id="clickSound">
+        <source src="audio\nyuck.mp3" type="audio/mpeg">
+    </audio>
+
+<script>
+    const image = document.getElementById("clickableImage");
+    const sound = document.getElementById("clickSound");
+    const shakeSound = document.getElementById("shakeSound");
+    const bgm = document.getElementById("bgm");
+
+    let holdTimer;
+    let shakeLevel = 0;
+    let shakeInterval;
+
+    let bgmFadeInterval;
+    let originalBgmVolume = bgm.volume;
+
+
+    image.addEventListener("click", (e) => {
+        e.preventDefault();
+        sound.currentTime = 0;
+        sound.play();
+        image.classList.add("scaled");
+        setTimeout(() => {
+            image.classList.remove("scaled");
+        }, 100);
+    }); 
+    function applyVisualEffects(level) {
+        // Brightness grows more gradually but without a hard cap
+        const brightness = 1 + level * 0.5;
+        // Contrast decreases steadily, but with a minimum to prevent pure whiteout
+        const contrast = Math.max(1 - level * 0.1);
+        image.style.filter = `brightness(${brightness}) contrast(${contrast})`;
+    }
+
+    function resetVisualEffects() {
+        image.style.filter = "";
+        image.classList.remove("shake1", "shake2", "shake3", "shake4", "shake5");
+    }
+
+image.addEventListener("mousedown", () => {
+    shakeLevel = 0;
+
+    // Start sound
+    shakeSound.currentTime = 0;
+    shakeSound.play();
+
+    // Gradually reduce BGM volume
+    bgmFadeInterval = setInterval(() => {
+        if (bgm.volume > 0.05) {
+            bgm.volume = Math.max(bgm.volume - 0.05, 0); // reduce volume safely
+        }
+    }, 200); // every 200ms
+
+
+    // Apply first shake immediately
+    shakeLevel++;
+    image.classList.remove("shake1", "shake2", "shake3", "shake4", "shake5");
+    image.classList.add("shake1");
+    applyVisualEffects(shakeLevel);
+
+    // Continue shaking every second
+        shakeInterval = setInterval(() => {
+            shakeLevel++;
+
+            image.classList.remove("shake1", "shake2", "shake3", "shake4", "shake5");
+
+            if (shakeLevel === 2) image.classList.add("shake2");
+            else if (shakeLevel === 3) image.classList.add("shake3");
+            else if (shakeLevel === 4) image.classList.add("shake4");
+            else if (shakeLevel >= 5) image.classList.add("shake5");
+
+            applyVisualEffects(shakeLevel);
+        }, 700);
+
+
+    // Redirect after 5 seconds
+    holdTimer = setTimeout(() => {
+        clearInterval(shakeInterval);
+        window.location.href = "https://slemresidence.net";
+    }, 7050);
+});
+
+
+    image.addEventListener("mouseup", () => {
+        clearTimeout(holdTimer);
+        clearInterval(shakeInterval);
+
+        clearInterval(bgmFadeInterval);
+        bgm.volume = originalBgmVolume; // restore original volume
+
+        resetVisualEffects();
+
+        shakeSound.pause();
+        shakeSound.currentTime = 0;
+
+    });
+
+    image.addEventListener("mouseleave", () => {
+        clearTimeout(holdTimer);
+        clearInterval(shakeInterval);
+
+        clearInterval(bgmFadeInterval);
+        bgm.volume = originalBgmVolume; // restore original volume
+
+        resetVisualEffects();
+
+        shakeSound.pause();
+        shakeSound.currentTime = 0;
+
+    });
+</script>
+
+
+</body>
+</html>
