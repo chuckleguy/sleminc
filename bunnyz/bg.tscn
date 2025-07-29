@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxjrwvguv0hey"]
+
+[ext_resource type="AudioStream" uid="uid://cbly14w2tdkpy" path="res://tam-n17loop.ogg" id="1_t4gw0"]
+
+[node name="bg" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_t4gw0")
+autoplay = true

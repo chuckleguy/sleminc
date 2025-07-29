@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2rw8xn2kovyg"]
+
+[ext_resource type="Script" uid="uid://bnlawxt0cmhfw" path="res://the_land.gd" id="1_0njmq"]
+[ext_resource type="Texture2D" uid="uid://cv63mxp6pp2py" path="res://white.png" id="2_uxfd3"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="the land" type="StaticBody2D" parent="."]
+script = ExtResource("1_0njmq")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="the land"]
+position = Vector2(-452, -389)
+scale = Vector2(0.718409, 0.718409)
+build_mode = 1
+polygon = PackedVector2Array(-5.56787, 38.975, -5.56787, 1000.82, 1272.26, 1000.82, 1272.26, 37.583)
+
+[node name="TextureRect" type="TextureRect" parent="the land/CollisionPolygon2D"]
+z_index = -1
+offset_left = -5.56788
+offset_top = 37.583
+offset_right = 34.4321
+offset_bottom = 77.583
+scale = Vector2(31.9507, 24.0478)
+texture = ExtResource("2_uxfd3")
+expand_mode = 1
