@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <title>Bunnyz</title>
+    <link rel="icon" type="image/ico" href="https://i.imgur.com/oGPEtCC.png">
+</head>
+
+<style>
+        @keyframes rotateBackground {
+            0% { background-image: url('img/chucklefaceM.png'); background-position: 0% -0%; }
+            100% { background-image: url('img/chucklefaceM.png'); background-position: 100% 100%; }
+        }
+
+
+    body {
+        zoom: 60%;
+        background-color: #9999b1;
+        font-family: Arial, sans-serif;
+        padding: 125px;
+        font-size: 100px;
+        color: #333;
+        display: flex;
+        justify-content: center; /* Centers horizontally */
+        align-items: center; /* Centers vertically */
+        background-repeat: repeat;
+        background-size: 5%;
+        animation: rotateBackground 55s linear infinite;
+    }
+    iframe {
+        width: 1280px; /* Adjust as needed */
+        height: 960px; /* Adjust as needed */
+        border-radius: 25px; /* Optional: remove iframe border */
+    }
+
+</style>
+
+<body>
+     <iframe src="Bunnyz.html" title="Bunnyz"></iframe> 
+</body>
+</html>
